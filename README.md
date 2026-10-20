@@ -1,64 +1,151 @@
-# 🇮🇩 Computational Historiography of Macroeconomic Volatility: Multimodal EWS for Indonesian Rupiah (1998–2026)
+🇮🇩 Computational Historiography of Macroeconomic Volatility
+A Multimodal Early Warning System for Indonesian Rupiah Volatility
+Political Narratives · IndoBERT · Deep Learning · Time Series · Fuzzy Logic
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=flat&logo=pytorch&logoColor=white)](https://pytorch.org/)
-[![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat&logo=tensorflow&logoColor=white)](https://tensorflow.org/)
+Research prototype exploring whether historical political narratives can complement macroeconomic indicators in the analysis of USD/IDR exchange rate volatility.
+</div>
 
-An advanced **Multimodal Machine Learning Framework** and **Early Warning System (EWS)** for macroeconomic stability. This repository bridges political text analysis (*Computational Historiography*) with time-series forecasting to predict USD/IDR exchange rate volatility and identify systemic financial risks during key Indonesian political transition periods (1998–2026).
+🔎 Overview
+Traditional macroeconomic forecasting often relies on numerical indicators such as exchange rates, inflation, and policy rates. However, market uncertainty can also be shaped by political events, public narratives, and shifts in collective sentiment.
 
----
+This project explores a multimodal machine learning framework that combines historical Indonesian political texts with numerical macroeconomic data. The objective is to investigate whether narrative signals can provide additional information for studying exchange rate volatility and developing an interpretable early warning system.
 
-## 📌 Executive Summary & Novelty
+The study focuses on Indonesian political and economic transitions from 1998 to 2026, subject to the availability, consistency, and verification of historical data.
+Research status: Experimental research prototype. Findings should be interpreted as preliminary until validated through reproducible evaluation, appropriate baselines, and out-of-sample testing.
 
-Conventional macroeconomic models primarily listen to numerical indicators (e.g., Inflation, BI Rate), often overlooking public panic and political sentiment that trigger market turbulence. This research addresses this gap by treating political narrative history as machine-readable data:
+✨ Research Objectives
+1. Context Aware Political Text Processing
+Use IndoBERT (indobenchmark/indobert-base-p1) to represent Indonesian political narratives as contextual embeddings. Text preprocessing is designed to preserve meaningful expressions, including negation and contrast markers, where appropriate.
+2. Latent Feature Compression
+Explore a deep autoencoder to compress high dimensional text embeddings into a smaller latent representation. The current design investigates reducing 768 dimensional embeddings to five latent features through intermediate layers.
+3. Multimodal Time Series Forecasting
+Combine latent text representations with numerical macroeconomic indicators using an early fusion approach. A stacked LSTM model with a six month lookback window is explored for sequential forecasting, with a Random Forest Regressor serving as a baseline.
+4. Interpretable Risk Classification
+Explore a Mamdani Fuzzy Inference System (FIS) that maps selected sociopolitical indicators and model outputs into understandable risk categories.
+Indicator	Interpretation
+🟢 Green	Low estimated risk
+🟡 Yellow	Moderate estimated risk
+🔴 Red	High estimated risk
 
-1. **Context-Preserving NLP Extraction**: Utilizes **IndoBERT** (`indobenchmark/indobert-base-p1`) with tailored text preprocessing that preserves emotionally valuable tokens (e.g., negation terms like *'tidak'*, *'bukan'*, and contrast markers like *'krisis'*), preventing semantic attention loss[cite: 3, 7].
-2. **Deep Autoencoder Compression**: Compresses 768-dimensional IndoBERT contextual embeddings into 5 latent non-linear features via a multi-layer Neural Autoencoder ($128 \rightarrow 64 \rightarrow 5$).
-3. **Multimodal Sequential Forecasting**: Combines macro-monetary indicators and latent text features using an Early Fusion approach to train a **Stacked LSTM** model (6-month lookback window), evaluated against a `GridSearchCV`-tuned **Random Forest Regressor** baseline.
-4. **Mamdani Fuzzy Early Warning System**: Maps the dynamic Sociopolitical Index ($\text{Isp}$) and predicted exchange volatility into a human-interpretable Mamdani Fuzzy Inference System (FIS), deploying visual risk alerts: 🟢 **Low Risk**, 🟡 **Medium Risk**, and 🔴 **High Risk (Red Alert)**.
-5. **Explainable AI (XAI) & Backtesting**: Demonstrates through surrogate feature importance that text features account for $>25\%$ of volatility spikes during historical crisis periods (1998 Reformasi, 2008 Global Crisis, 2020 COVID-19).
 
----
-
-## 🏗️ System Architecture Pipeline
-
-```text
-[ Historical Texts (1998-2026) ] ──> [ IndoBERT Encoder ] ──> [ Deep Autoencoder (5 Latent Dims) ]
-                                                                        │ (Early Fusion)
-[ Numerical (USD/IDR, Inf, Rate)] ──────────────────────────────────────┘
+These labels represent model outputs, not official financial advice or guaranteed predictions.
+5. Explainability and Historical Evaluation
+Investigate feature importance and chronological backtesting around major historical periods, including the 1998 Reformasi, the 2008 global financial crisis, and the 2020 COVID 19 shock. The purpose is to assess whether text derived features contribute useful information beyond numerical variables.
+🧠 Conceptual Architecture
+Historical Indonesian Political Narratives
+                    │
+                    ▼
+              IndoBERT Encoder
+                    │
+                    ▼
+          Deep Autoencoder
+        (Compact Latent Features)
+                    │
+                    ├──────────────────────┐
+                    │                      │
+                    ▼                      ▼
+          Numerical Indicators      Text Features
+                    │                      │
+                    └──────────┬───────────┘
+                               ▼
+                    Multimodal Early Fusion
                                │
                                ▼
-            [ Stacked LSTM Time-Series Forecasting ]
+                    Stacked LSTM Forecast
                                │
                                ▼
-          [ Mamdani Fuzzy Inference System (FIS) ]
+                    Mamdani Fuzzy Inference
                                │
-            ┌──────────────────┼──────────────────┐
-            ▼                  ▼                  ▼
-      🟢 Green Alert     🟡 Yellow Alert     🔴 Red Alert
-       (Low Risk)        (Medium Risk)       (High Risk)
+                               ▼
+                    Interpretable Risk Signal
+This diagram describes the proposed workflow. It should not be interpreted as proof that every component has been fully validated.
+🧪 Experimental Evaluation
+The evaluation is intended to use chronological data splits to reduce information leakage from future observations into training. Model performance should be compared against simple baselines and reported with suitable forecasting metrics.
 
-📊 Experimental ResultsEvaluated on the test set chronological sequence (Transition Period 2025–2026):Model ArchitectureMAE (Rupiah)RMSE (Rupiah)Computational SpeedLong-term DependencyRandom Forest Baseline (Tuned)Rp 400 – 550Rp 450 – 600Very Fast (< 2s)LimitedStacked LSTM Multimodal (Proposed)Rp 150 – 250Rp 180 – 300Moderate (~30s)Superior
-Key Takeaway: Stacked LSTM demonstrates superior accuracy in capturing long-term non-linear sequential dependencies in multimodal financial time-series data, while the Random Forest baseline provides computational speed advantages[cite: 4].
+Recommended reporting includes:
+Evaluation area	What to report
+Forecast accuracy	MAE, RMSE, and an appropriate benchmark
+Baseline comparison	Random Forest and a simple naive forecast
+Temporal robustness	Chronological holdout and rolling evaluation where feasible
+Feature contribution	Comparison of numerical only and multimodal inputs
+Risk classification	Clearly defined thresholds and classification metrics
+Reproducibility	Random seeds, data sources, preprocessing, and package versions
+
+
+Important: Add numerical results, plots, and claims of model superiority only after they have been verified from actual experiment outputs. Avoid presenting feature contribution percentages as established findings unless the calculation and evaluation procedure are documented.
+🛠️ Technology Stack
+Component	Technology
+Language	Python
+Indonesian language representation	Hugging Face Transformers and IndoBERT
+Deep learning	PyTorch and/or TensorFlow, depending on the implementation
+Sequential modelling	LSTM
+Baseline modelling	Scikit learn
+Data processing	Pandas and NumPy
+Visualisation	Matplotlib, Seaborn, and Plotly
+Risk interpretation	Mamdani Fuzzy Inference System
+
 
 📁 Repository Structure
-.
-├── data_penelitiaan.py            # Main end-to-end Python script (Preprocessing, Training, FIS)
-├── .gitignore                     # Python cache & system exclusions
-├── LICENSE                        # MIT Open Source License
-└── README.md                      # Project documentation
-
-🚀 Quick Start & Reproduction
-1. Clone Repository
-Bash
+indonesian-economic-ews-multimodal/
+│
+├── data_penelitiaan.py    # Main research pipeline
+├── .gitignore             # Files excluded from version control
+├── LICENSE                # Project license
+└── README.md              # Project documentation
+The repository structure above reflects the files currently described in this project. Update it if additional modules, datasets, notebooks, or test files are added.
+🚀 Getting Started
+Prerequisites
+Install a compatible Python version and ensure that your environment has sufficient memory for transformer embeddings and deep learning experiments. GPU acceleration may help, but availability depends on your hardware and framework configuration.
+1. Clone the Repository
 git clone https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git
 cd indonesian-economic-ews-multimodal
-
 2. Install Dependencies
-Bash
 pip install transformers torch tensorflow scikit-learn pandas numpy matplotlib seaborn plotly
-3. Run Pipeline
-Bash
+Depending on the implementation, you may not need both PyTorch and TensorFlow. For reproducible work, consider creating a virtual environment and maintaining a pinned requirements.txt.
+3. Run the Pipeline
 python data_penelitiaan.py
-📑 Research Reports & PublicationsDetailed research documentation and manuscript drafts are available in Google Docs:📄 Complete Research Report (Paper Draft): View Document📄 CRISP-DM Technical Summary: View Document📖 Key ReferencesAsh, E., Gauthier, G., & Widmer, P. (2023/2024). Relatio: Text semantics capture political and economic narratives. Political Analysis.   Gentzkow, M., Kelly, B., & Taddy, M. (2019). Text as data. Journal of Economic Literature, 57(3), 535–574.   Koto, F., et al. (2020). IndoLEM and IndoBERT: A benchmark dataset and pre-trained language model for Indonesian NLP. COLING 2020.Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.📜 LicenseThis project is open-source and distributed under the MIT License.
+The command above assumes the script is located in the repository root and supports direct execution. Confirm the required input files and configuration before running it.
+📊 Data and Reproducibility
+For credible research, document the source, date range, frequency, licensing, and preprocessing of every dataset. Record how political texts are collected, how they are aligned with monthly or daily economic observations, and how missing values are handled.
+
+To avoid data leakage, fit preprocessing transformations only on training data. Ensure that text published after a forecast date is never used to predict an earlier outcome. Keep test periods separate until model selection is complete.
+
+No dataset should be described as included unless it is actually present in the repository and available to users.
+🔬 Research Questions
+1. Do political narrative features improve USD/IDR volatility forecasting beyond numerical macroeconomic indicators alone?
+2. How stable are the results across different historical periods and political transitions?
+3. Can fuzzy logic translate model outputs into risk categories that are understandable without overstating certainty?
+4. Do the observed improvements persist under chronological out of sample evaluation?
+⚠️ Limitations
+Political text data can contain sampling bias, changing language patterns, and uneven historical coverage. Macroeconomic data may be revised, while crisis periods are rare and difficult to forecast. A model that performs well on one historical period may not generalise to future market conditions.
+
+This project is a research prototype, not a production financial system. It does not provide investment recommendations, and its risk signals should not be used as the sole basis for financial decisions.
+📚 Research Reports and Publications
+Research notes, manuscripts, and supplementary materials can be linked here as they become available and are ready to share.
+Resource	Status
+Research manuscript	Add verified public link when available
+Dataset documentation	Add source and access details
+Experiment results	Add reproducible metrics and figures
+Supplementary materials	Add repository paths or public links
+
+
+🧭 Roadmap
+1. Verify data sources and establish a reproducible preprocessing pipeline.
+2. Implement numerical only and multimodal baselines.
+3. Evaluate models using chronological holdout data.
+4. Test whether text features provide measurable incremental value.
+5. Calibrate and evaluate fuzzy risk categories.
+6. Publish experiment configurations, limitations, and reproducible results.
+👤 Author
+Marvel Edmund Kumaat
+
+Informatics Engineering student
+Universitas Sam Ratulangi, Indonesia
+📄 License
+This project is intended to use the MIT License if the repository's LICENSE file confirms that choice. Please ensure the license file is present and matches the license stated here.
+<div align="center">
+
+Computational Historiography × Multimodal Machine Learning × Macroeconomic Risk Research
+
+Building a reproducible research prototype for studying political narratives and economic volatility.
+</div>
