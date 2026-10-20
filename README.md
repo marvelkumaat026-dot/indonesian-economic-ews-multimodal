@@ -1,3 +1,5 @@
+<div align="center">
+
 🇮🇩 Computational Historiography of Macroeconomic Volatility
 A Multimodal Early Warning System for Indonesian Rupiah Volatility
 Political Narratives · IndoBERT · Deep Learning · Time Series · Fuzzy Logic
@@ -31,6 +33,7 @@ Indicator	Interpretation
 These labels represent model outputs, not official financial advice or guaranteed predictions.
 5. Explainability and Historical Evaluation
 Investigate feature importance and chronological backtesting around major historical periods, including the 1998 Reformasi, the 2008 global financial crisis, and the 2020 COVID 19 shock. The purpose is to assess whether text derived features contribute useful information beyond numerical variables.
+
 🧠 Conceptual Architecture
 Historical Indonesian Political Narratives
                     │
@@ -59,31 +62,31 @@ Historical Indonesian Political Narratives
                                ▼
                     Interpretable Risk Signal
 This diagram describes the proposed workflow. It should not be interpreted as proof that every component has been fully validated.
+
 🧪 Experimental Evaluation
 The evaluation is intended to use chronological data splits to reduce information leakage from future observations into training. Model performance should be compared against simple baselines and reported with suitable forecasting metrics.
 
 Recommended reporting includes:
-Evaluation area	What to report
-Forecast accuracy	MAE, RMSE, and an appropriate benchmark
-Baseline comparison	Random Forest and a simple naive forecast
-Temporal robustness	Chronological holdout and rolling evaluation where feasible
-Feature contribution	Comparison of numerical only and multimodal inputs
-Risk classification	Clearly defined thresholds and classification metrics
-Reproducibility	Random seeds, data sources, preprocessing, and package versions
-
-
+| Evaluation area | What to report |
+|:--|:--|
+| Forecast accuracy | MAE, RMSE, and an appropriate benchmark |
+| Baseline comparison | Random Forest and a simple naive forecast |
+| Temporal robustness | Chronological holdout and rolling evaluation where feasible |
+| Feature contribution | Comparison of numerical only and multimodal inputs |
+| Risk classification | Clearly defined thresholds and classification metrics |
+| Reproducibility | Random seeds, data sources, preprocessing, and package versions |
 Important: Add numerical results, plots, and claims of model superiority only after they have been verified from actual experiment outputs. Avoid presenting feature contribution percentages as established findings unless the calculation and evaluation procedure are documented.
-🛠️ Technology Stack
-Component	Technology
-Language	Python
-Indonesian language representation	Hugging Face Transformers and IndoBERT
-Deep learning	PyTorch and/or TensorFlow, depending on the implementation
-Sequential modelling	LSTM
-Baseline modelling	Scikit learn
-Data processing	Pandas and NumPy
-Visualisation	Matplotlib, Seaborn, and Plotly
-Risk interpretation	Mamdani Fuzzy Inference System
 
+🛠️ Technology Stack
+| Component | Technology |
+|:--|:--|
+| Language | Python |
+| Indonesian language representation | Hugging Face Transformers and IndoBERT |
+| Deep learning | PyTorch and/or TensorFlow, depending on the implementation |
+| Sequential modelling | LSTM |
+| Baseline modelling | Scikit learn |
+| Data processing | Pandas and NumPy |
+| Visualisation | Matplotlib, Seaborn, and Plotly |
 
 📁 Repository Structure
 indonesian-economic-ews-multimodal/
@@ -93,19 +96,21 @@ indonesian-economic-ews-multimodal/
 ├── LICENSE                # Project license
 └── README.md              # Project documentation
 The repository structure above reflects the files currently described in this project. Update it if additional modules, datasets, notebooks, or test files are added.
+
 🚀 Getting Started
 Prerequisites
 Install a compatible Python version and ensure that your environment has sufficient memory for transformer embeddings and deep learning experiments. GPU acceleration may help, but availability depends on your hardware and framework configuration.
 1. Clone the Repository
-git clone https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git
+ git clone https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git
 cd indonesian-economic-ews-multimodal
-2. Install Dependencies
-pip install transformers torch tensorflow scikit-learn pandas numpy matplotlib seaborn plotly
-Depending on the implementation, you may not need both PyTorch and TensorFlow. For reproducible work, consider creating a virtual environment and maintaining a pinned requirements.txt.
-3. Run the Pipeline
-python data_penelitiaan.py
-The command above assumes the script is located in the repository root and supports direct execution. Confirm the required input files and configuration before running it.
-📊 Data and Reproducibility
+
+   2. Install Dependencies
+      pip install transformers torch tensorflow scikit-learn pandas numpy matplotlib seaborn plotly
+      Depending on the implementation, you may not need both PyTorch and TensorFlow. For reproducible work, consider creating a virtual environment and maintaining a pinned requirements.txt.
+  3. Run the Pipeline
+     python data_penelitiaan.py
+     The command above assumes the script is located in the repository root and supports direct execution. Confirm the required input files and configuration before running it.
+     📊 Data and Reproducibility
 For credible research, document the source, date range, frequency, licensing, and preprocessing of every dataset. Record how political texts are collected, how they are aligned with monthly or daily economic observations, and how missing values are handled.
 
 To avoid data leakage, fit preprocessing transformations only on training data. Ensure that text published after a forecast date is never used to predict an earlier outcome. Keep test periods separate until model selection is complete.
@@ -122,12 +127,12 @@ Political text data can contain sampling bias, changing language patterns, and u
 This project is a research prototype, not a production financial system. It does not provide investment recommendations, and its risk signals should not be used as the sole basis for financial decisions.
 📚 Research Reports and Publications
 Research notes, manuscripts, and supplementary materials can be linked here as they become available and are ready to share.
-Resource	Status
-Research manuscript	Add verified public link when available
-Dataset documentation	Add source and access details
-Experiment results	Add reproducible metrics and figures
-Supplementary materials	Add repository paths or public links
-
+| Resource | Status |
+|:--|:--|
+| Research manuscript | Add verified public link when available |
+| Dataset documentation | Add source and access details |
+| Experiment results | Add reproducible metrics and figures |
+| Supplementary materials | Add repository paths or public links |
 
 🧭 Roadmap
 1. Verify data sources and establish a reproducible preprocessing pipeline.
@@ -136,13 +141,16 @@ Supplementary materials	Add repository paths or public links
 4. Test whether text features provide measurable incremental value.
 5. Calibrate and evaluate fuzzy risk categories.
 6. Publish experiment configurations, limitations, and reproducible results.
+
 👤 Author
 Marvel Edmund Kumaat
 
 Informatics Engineering student
 Universitas Sam Ratulangi, Indonesia
+
 📄 License
 This project is intended to use the MIT License if the repository's LICENSE file confirms that choice. Please ensure the license file is present and matches the license stated here.
+
 <div align="center">
 
 Computational Historiography × Multimodal Machine Learning × Macroeconomic Risk Research
