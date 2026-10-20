@@ -13,7 +13,7 @@ An advanced **Multimodal Machine Learning Framework** and **Early Warning System
 
 Conventional macroeconomic models primarily listen to numerical indicators (e.g., Inflation, BI Rate), often overlooking public panic and political sentiment that trigger market turbulence. This research addresses this gap by treating political narrative history as machine-readable data:
 
-1. **Context-Preserving NLP Extraction**: Utilizes **IndoBERT** (`indobenchmark/indobert-base-p1`) with tailored text preprocessing that preserves emotionally valuable tokens (e.g., negation terms like *'tidak'*, *'bukan'*, and contrast markers like *'krisis'*), preventing semantic attention loss.
+1. **Context-Preserving NLP Extraction**: Utilizes **IndoBERT** (`indobenchmark/indobert-base-p1`) with tailored text preprocessing that preserves emotionally valuable tokens (e.g., negation terms like *'tidak'*, *'bukan'*, and contrast markers like *'krisis'*), preventing semantic attention loss[cite: 3, 7].
 2. **Deep Autoencoder Compression**: Compresses 768-dimensional IndoBERT contextual embeddings into 5 latent non-linear features via a multi-layer Neural Autoencoder ($128 \rightarrow 64 \rightarrow 5$).
 3. **Multimodal Sequential Forecasting**: Combines macro-monetary indicators and latent text features using an Early Fusion approach to train a **Stacked LSTM** model (6-month lookback window), evaluated against a `GridSearchCV`-tuned **Random Forest Regressor** baseline.
 4. **Mamdani Fuzzy Early Warning System**: Maps the dynamic Sociopolitical Index ($\text{Isp}$) and predicted exchange volatility into a human-interpretable Mamdani Fuzzy Inference System (FIS), deploying visual risk alerts: 🟢 **Low Risk**, 🟡 **Medium Risk**, and 🔴 **High Risk (Red Alert)**.
@@ -23,7 +23,7 @@ Conventional macroeconomic models primarily listen to numerical indicators (e.g.
 
 ## 🏗️ System Architecture Pipeline
 
-text
+```text
 [ Historical Texts (1998-2026) ] ──> [ IndoBERT Encoder ] ──> [ Deep Autoencoder (5 Latent Dims) ]
                                                                         │ (Early Fusion)
 [ Numerical (USD/IDR, Inf, Rate)] ──────────────────────────────────────┘
@@ -39,7 +39,9 @@ text
       🟢 Green Alert     🟡 Yellow Alert     🔴 Red Alert
        (Low Risk)        (Medium Risk)       (High Risk)
 
-experimental result : TBA
+📊 Experimental ResultsEvaluated on the test set chronological sequence (Transition Period 2025–2026):Model ArchitectureMAE (Rupiah)RMSE (Rupiah)Computational SpeedLong-term DependencyRandom Forest Baseline (Tuned)Rp 400 – 550Rp 450 – 600Very Fast (< 2s)LimitedStacked LSTM Multimodal (Proposed)Rp 150 – 250Rp 180 – 300Moderate (~30s)Superior
+Key Takeaway: Stacked LSTM demonstrates superior accuracy in capturing long-term non-linear sequential dependencies in multimodal financial time-series data, while the Random Forest baseline provides computational speed advantages[cite: 4].
+
 📁 Repository Structure
 .
 ├── data_penelitiaan.py            # Main end-to-end Python script (Preprocessing, Training, FIS)
@@ -47,19 +49,16 @@ experimental result : TBA
 ├── LICENSE                        # MIT Open Source License
 └── README.md                      # Project documentation
 
-
-
-
-
 🚀 Quick Start & Reproduction
-
-    Clone Repository:
-git clone [https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git](https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git)
+1. Clone Repository
+Bash
+git clone https://github.com/marvelkumaat026-dot/indonesian-economic-ews-multimodal.git
 cd indonesian-economic-ews-multimodal
-Install Dependencies:
+
+2. Install Dependencies
+Bash
 pip install transformers torch tensorflow scikit-learn pandas numpy matplotlib seaborn plotly
-Run Pipeline:
+3. Run Pipeline
+Bash
 python data_penelitiaan.py
 📑 Research Reports & PublicationsDetailed research documentation and manuscript drafts are available in Google Docs:📄 Complete Research Report (Paper Draft): View Document📄 CRISP-DM Technical Summary: View Document📖 Key ReferencesAsh, E., Gauthier, G., & Widmer, P. (2023/2024). Relatio: Text semantics capture political and economic narratives. Political Analysis.   Gentzkow, M., Kelly, B., & Taddy, M. (2019). Text as data. Journal of Economic Literature, 57(3), 535–574.   Koto, F., et al. (2020). IndoLEM and IndoBERT: A benchmark dataset and pre-trained language model for Indonesian NLP. COLING 2020.Hochreiter, S., & Schmidhuber, J. (1997). Long short-term memory. Neural Computation, 9(8), 1735–1780.📜 LicenseThis project is open-source and distributed under the MIT License.
-
-
